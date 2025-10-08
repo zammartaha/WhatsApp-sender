@@ -104,7 +104,7 @@ python send\_txt.py
 
 
 
-###### Tips \& common issues
+##### Tips \& common issues
 
 File not found? Make sure paths in .env exist (use your actual Windows username/path).
 

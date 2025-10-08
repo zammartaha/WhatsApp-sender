@@ -60,12 +60,6 @@ If you want to customize any of these, create a .env file (in the same folder as
 
 Example .env
 
-=============================
-
-WhatsApp Automation Settings
-
-=============================
-
 \#Path to your Excel file with phone numbers
 
 EXCEL\_FILE=excel.xlsx

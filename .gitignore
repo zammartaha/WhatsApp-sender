@@ -1,0 +1,8 @@
+*.txt
+*xls
+*xlsx
+*.xlsm
+*.csv
+.env
+cheker.py
+send_img_txt.py

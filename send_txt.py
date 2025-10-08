@@ -15,8 +15,8 @@ import os
 load_dotenv()
 
 # filenames from .env (fall back to previous defaults)
-excel_file = os.getenv("EXCEL_FILE", "excel.xlsm")
-sheet_name = os.getenv("SHEET_NAME", "phone_numbers")
+excel_file = os.getenv("EXCEL_FILE", "excel.xlsx")
+sheet_name = os.getenv("SHEET_NAME", "Sheet1")
 first_row_name = os.getenv("FIRST_ROW_NAME", "Numbers")
 message_file = os.getenv("MESSAGE_FILE", "message.txt")
 log_file = os.getenv("LOG_FILE", "failed_numbers.log")

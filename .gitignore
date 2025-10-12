@@ -3,6 +3,6 @@
 *xlsx
 *.xlsm
 *.csv
+*.log
 .env
 cheker.py
-send_img_txt.py

@@ -4,7 +4,7 @@
 
 Download and install Python: https://www.python.org/downloads/
 
-During setup, check “Add Python to PATH.”
+During setup, check “Add Python to PATH”
 
 2. ##### Install required libraries
 
@@ -14,12 +14,12 @@ pip install selenium python-dotenv pandas openpyxl xlrd
 
 3. ##### Set up ChromeDriver \& WhatsApp session
 
-Find your exact Chrome version: open Chrome → chrome://settings/help.
+Find your exact Chrome version: open Chrome → chrome://settings/help
 
 Download the matching ChromeDriver from:
 https://googlechromelabs.github.io/chrome-for-testing/
 
-For Windows, choose “chromedriver win64.”
+For Windows, choose “chromedriver win64”
 
 Move chromedriver.exe to:
 
@@ -34,9 +34,9 @@ chrome.exe --user-data-dir="C:\\selenium\\chrome-profile" --profile-directory="D
 
 
 Go to https://web.whatsapp.com/
-and log in.
+and log in
 
-Close Chrome.
+Close Chrome
 
 
 
@@ -96,9 +96,9 @@ CHROME\_PROFILE\_NAME=Default
 
 4. ##### Run the script
 
-Put your message inside message.txt.
+Put your message inside message.txt
 
-Either double-click run.bat or run:
+Either double-click send_text.bat or run:
 
 python send\_txt.py
 

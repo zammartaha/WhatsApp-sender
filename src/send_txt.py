@@ -1,10 +1,11 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium import webdriver
 from dotenv import load_dotenv
 from pathlib import Path
 import pandas as pd
@@ -47,6 +48,7 @@ options.add_argument(f"profile-directory={chrome_profile_name}")
 
 service = Service(str(chrome_driver_dir))
 driver = webdriver.Chrome(service=service, options=options)
+actions = ActionChains(driver)
 driver.get("https://web.whatsapp.com/")
 wait = WebDriverWait(driver, 60)
 time.sleep(10)
@@ -63,8 +65,8 @@ with open(log_file, "w", encoding="utf-8") as f:
 for index, row in data.iterrows():
     phone_number = str(row[first_row_name]).strip()
     try:
-        new_chat = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@title='New chat']")))
-        new_chat.click()
+        # Start new chat
+        actions.key_down(Keys.CONTROL).key_down(Keys.ALT).send_keys('n').key_up(Keys.ALT).key_up(Keys.CONTROL).perform()
 
         search_field = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='Search name or number']")))
         search_field.clear()

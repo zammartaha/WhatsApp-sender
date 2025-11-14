@@ -62,7 +62,6 @@ with open(log_file, "w", encoding="utf-8") as f:
     f.write("="*40 + "\n\n")
 
 last_index = len(data) - 1
-actions = ActionChains(driver)
 
 for index, row in data.iterrows():
     phone_number = int(str(row[column_name]).strip())
@@ -90,7 +89,7 @@ for index, row in data.iterrows():
         actions.perform()
 
         text_field.send_keys(Keys.ENTER)
-        print(f"Progress: {(index/last_index)*100}%")
+        print(f"Progress: {(index/last_index)*100:.2f}%")
         time.sleep(1)
 
     except Exception as e:

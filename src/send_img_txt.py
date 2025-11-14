@@ -56,6 +56,7 @@ options.add_argument(f"profile-directory={chrome_profile_name}")
 
 service = Service(str(chrome_driver_dir))
 driver = webdriver.Chrome(service=service, options=options)
+actions = ActionChains(driver)
 driver.get("https://web.whatsapp.com/")
 wait = WebDriverWait(driver, 60)
 time.sleep(10)
@@ -69,7 +70,6 @@ with open(log_file, "w", encoding="utf-8") as f:
     f.write("="*40 + "\n\n")
 
 last_index = len(data) - 1
-actions = ActionChains(driver)
 
 # Iterate through the Excel data
 for index, row in data.iterrows():
@@ -110,7 +110,7 @@ for index, row in data.iterrows():
 
         send_keys = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='Send']")))
         send_keys.click()
-        print(f"Progress: {(index/last_index)*100}%")
+        print(f"Progress: {(index/last_index)*100:.2f}%")
         time.sleep(1)
 
     except Exception as e:

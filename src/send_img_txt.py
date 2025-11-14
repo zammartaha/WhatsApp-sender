@@ -18,7 +18,7 @@ load_dotenv()
 # filenames from .env (fall back to previous defaults)
 excel_file = os.getenv("EXCEL_FILE", "excel.xlsx")
 sheet_name = os.getenv("SHEET_NAME", "Sheet1")
-first_row_name = os.getenv("FIRST_ROW_NAME", "Numbers")
+column_name = os.getenv("COLUMN_NAME", "Numbers")
 message_file = os.getenv("MESSAGE_FILE", "message.txt")
 log_file = os.getenv("LOG_FILE", "failed_numbers.log")
 chrome_driver_dir = os.getenv("CHROME_DRIVER_DIR", r"C:\webdriver\chromedriver.exe")
@@ -68,9 +68,12 @@ with open(log_file, "w", encoding="utf-8") as f:
     f.write("Failed WhatsApp Numbers Log\n")
     f.write("="*40 + "\n\n")
 
+last_index = len(data) - 1
+actions = ActionChains(driver)
+
 # Iterate through the Excel data
 for index, row in data.iterrows():
-    phone_number = str(row[first_row_name]).strip()
+    phone_number = int(str(row[column_name]).strip())
     try:
         new_chat = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@title='New chat']")))
         new_chat.click()
@@ -78,7 +81,7 @@ for index, row in data.iterrows():
         search_field = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='Search name or number']")))
         search_field.clear()
         search_field.send_keys(phone_number)
-        print(f"Processing: {phone_number}")
+        print(f"{index+2}: Processing: {phone_number}")
         time.sleep(1)
         search_field.send_keys(Keys.ENTER)
 
@@ -95,21 +98,23 @@ for index, row in data.iterrows():
         text_field.send_keys(Keys.CONTROL + 'v')  # Paste the image
         time.sleep(2)
 
-        #Split the message by newlines and send each part with Shift+Enter
         if has_message:
             caption_keys = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='Type a message']")))
             caption_keys.clear()
-            for line in message.splitlines():
-                caption_keys.send_keys(line)
-                caption_keys.send_keys(Keys.SHIFT + Keys.ENTER)
+            for ch in message:
+                if ch == '\n':
+                    actions.key_down(Keys.SHIFT).send_keys(Keys.ENTER).key_up(Keys.SHIFT)
+                else:
+                    actions.send_keys(ch)
+            actions.perform()
 
         send_keys = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='Send']")))
         send_keys.click()
-
+        print(f"Progress: {(index/last_index)*100}%")
         time.sleep(1)
 
     except Exception as e:
-        error_msg = f"Failed for {phone_number}: {e}"
+        error_msg = f"{index+2}: Failed for {phone_number}: {e}"
         print(error_msg)
         failed_numbers.append(phone_number)
 

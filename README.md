@@ -68,9 +68,9 @@ EXCEL\_FILE=excel.xlsx
 
 SHEET\_NAME=Sheet1
 
-\#Column header of the first column containing phone numbers
+\#Name of the Column containing phone numbers
 
-FIRST\_ROW\_NAME=Numbers
+COLUMN\_NAME=Numbers
 
 \#Text file containing the message to send
 
@@ -98,7 +98,7 @@ CHROME\_PROFILE\_NAME=Default
 
 Put your message inside message.txt
 
-Either double-click send_text.bat or run:
+Either double-click send\_text.bat or run:
 
 python send\_txt.py
 

@@ -64,8 +64,12 @@ with open(log_file, "w", encoding="utf-8") as f:
 last_index = len(data) - 1
 
 for index, row in data.iterrows():
-    phone_number = int(str(row[column_name]).strip())
     try:
+        num = str(row[column_name]).strip()
+        if num.endswith(".0"):
+            num = num[:-2]
+        num = num.replace(" ", "").replace("\u200b", "")
+        phone_number = int(num)
         # Start new chat
         actions.key_down(Keys.CONTROL).key_down(Keys.ALT).send_keys('n').key_up(Keys.ALT).key_up(Keys.CONTROL).perform()
 
@@ -102,7 +106,7 @@ for index, row in data.iterrows():
             f.write(error_msg + "\n")
 
 # Close the browser
-time.sleep(2)
+time.sleep(10)
 driver.quit()
 
 # Display failed numbers at the end

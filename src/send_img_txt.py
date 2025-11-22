@@ -9,6 +9,7 @@ from selenium import webdriver
 from dotenv import load_dotenv
 from pathlib import Path
 import pandas as pd
+import subprocess
 import time
 import sys
 import os
@@ -73,10 +74,14 @@ last_index = len(data) - 1
 
 # Iterate through the Excel data
 for index, row in data.iterrows():
-    phone_number = int(str(row[column_name]).strip())
     try:
-        new_chat = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[@title='New chat']")))
-        new_chat.click()
+        num = str(row[column_name]).strip()
+        if num.endswith(".0"):
+            num = num[:-2]
+        num = num.replace(" ", "").replace("\u200b", "")
+        phone_number = int(num)
+        # Start new chat
+        actions.key_down(Keys.CONTROL).key_down(Keys.ALT).send_keys('n').key_up(Keys.ALT).key_up(Keys.CONTROL).perform()
 
         search_field = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='Search name or number']")))
         search_field.clear()
@@ -123,7 +128,7 @@ for index, row in data.iterrows():
             f.write(error_msg + "\n")
 
 # Close the browser
-time.sleep(2)
+time.sleep(10)
 driver.quit()
 
 # Display failed numbers at the end
